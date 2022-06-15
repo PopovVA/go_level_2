@@ -18,13 +18,13 @@ import (
 
 type ErrorWithTime struct {
 	text string
-	time string
+	time time.Time
 }
 
 func New(text string) error {
 	return &ErrorWithTime{
 		text: text,
-		time: time.Now().GoString(),
+		time: time.Now(),
 	}
 }
 func (e *ErrorWithTime) Error() string {
