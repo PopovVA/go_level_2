@@ -1,4 +1,4 @@
-module github.com/PopovVA/lesson3
+module github.com/PopovVA/lesson3/v2
 
 go 1.18
 
