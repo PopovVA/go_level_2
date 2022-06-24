@@ -8,6 +8,9 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -25,10 +28,18 @@ func main() {
 	numWorkers := 50
 	jobs := make(chan int, numJobs)
 	results := make(chan int, numJobs)
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, syscall.SIGTERM, syscall.SIGINT)
 
 	for w := 1; w <= numWorkers; w++ {
 		go worker(w, jobs, results)
 	}
+
+	go func() {
+		defer close(exit)
+		sig := <-exit
+		panic(sig)
+	}()
 
 	for j := 0; j <= numJobs; j++ {
 		jobs <- j
