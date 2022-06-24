@@ -16,16 +16,17 @@ func worker(id int, jobs <-chan int, results chan<- int) {
 		fmt.Println("Worker", id, "started job", j)
 		time.Sleep(time.Second)
 		fmt.Println("Worker", id, "finished job", j)
-		results <- j
+		results <- 1
 	}
 }
 
 func main() {
-	numJobs := 100
+	numJobs := 1000
+	numWorkers := 50
 	jobs := make(chan int, numJobs)
 	results := make(chan int, numJobs)
 
-	for w := 1; w <= 3; w++ {
+	for w := 1; w <= numWorkers; w++ {
 		go worker(w, jobs, results)
 	}
 
@@ -36,7 +37,9 @@ func main() {
 
 	var n int
 	for a := 1; a <= numJobs; a++ {
-		n = <-results
+		n = n + <-results
 	}
+	close(results)
+
 	fmt.Println(n)
 }
