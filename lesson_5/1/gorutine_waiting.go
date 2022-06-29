@@ -3,7 +3,6 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -12,11 +11,13 @@ const count = 1000
 func main() {
 	var (
 		wg = sync.WaitGroup{}
+		mu = sync.Mutex{}
 	)
 	wg.Add(count)
 	for i := 0; i <= count; i += 1 {
 		go func(i int) {
-			fmt.Println(i)
+			mu.Lock()
+			defer mu.Unlock()
 			wg.Done()
 		}(i)
 	}
