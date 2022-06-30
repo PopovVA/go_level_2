@@ -1,0 +1,22 @@
+vadimpopov@Vadims-MacBook-Pro 3 % go run -race main.go
+==================
+WARNING: DATA RACE
+Read at 0x00c0001bc018 by goroutine 8:
+  main.main.func1()
+      /Users/vadimpopov/go/src/github.com/PopovVA/go_level_2/lesson_6/3/main.go:18 +0x30
+
+Previous write at 0x00c0001bc018 by goroutine 7:
+  main.main.func1()
+      /Users/vadimpopov/go/src/github.com/PopovVA/go_level_2/lesson_6/3/main.go:18 +0x44
+
+Goroutine 8 (running) created at:
+  main.main()
+      /Users/vadimpopov/go/src/github.com/PopovVA/go_level_2/lesson_6/3/main.go:17 +0x4f
+
+Goroutine 7 (finished) created at:
+  main.main()
+      /Users/vadimpopov/go/src/github.com/PopovVA/go_level_2/lesson_6/3/main.go:17 +0x4f
+==================
+1999
+Found 1 data race(s)
+exit status 66
