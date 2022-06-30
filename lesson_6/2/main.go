@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"runtime/trace"
 	"sync"
 )
@@ -18,6 +19,7 @@ func main() {
 		lock    sync.Mutex
 		wg      sync.WaitGroup
 	)
+	runtime.GOMAXPROCS(1)
 	trace.Start(os.Stderr)
 	defer trace.Stop()
 	wg.Add(count)
